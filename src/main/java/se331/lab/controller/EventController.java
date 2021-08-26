@@ -1,5 +1,6 @@
 package se331.lab.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,11 @@ import java.util.List;
 @Controller
 public class EventController {
     List<Event> eventList;
-
+    HttpHeaders responseHeader = new HttpHeaders();
     @PostConstruct
     public void init(){
         eventList = new ArrayList<>();
+        responseHeader.set("x-total-count",String.valueOf(eventList.size()));
         eventList.add(Event.builder()
                 .id(123L)
                 .category("power kawaii")
@@ -121,9 +123,9 @@ public class EventController {
             for(int i=firstIndex;i<firstIndex+perPage;i++){
                 output.add(eventList.get(i));
             }
-            return ResponseEntity.ok(output);
+            return new ResponseEntity<>(output,responseHeader,HttpStatus.OK);
         }catch (IndexOutOfBoundsException ex){
-            return ResponseEntity.ok(output);
+            return new ResponseEntity<>(output,responseHeader,HttpStatus.OK);
         }
     }
 
