@@ -1,4 +1,4 @@
-package se331.lab.lab07;
+package se331.lab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
